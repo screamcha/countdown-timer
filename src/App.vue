@@ -1,16 +1,31 @@
 <template>
-  <TimerForm />
+  <TimerForm v-if='!timer' @submit='createTimer' />
+  <Timer v-else :timer='timer' />
+
 </template>
 
 <script>
 import TimerForm from './components/TimerForm.vue'
+import Timer from './components/Timer.vue'
+import TimerModel from './models/Timer'
 import './assets/styles/normalize.css'
 import './assets/styles/global.css'
 
 export default {
   name: 'App',
+  data () {
+    return {
+      timer: null
+    }
+  },
   components: {
-    TimerForm
+    TimerForm,
+    Timer
+  },
+  methods: {
+    createTimer (name, date) {
+      this.timer = new TimerModel(name, date)
+    }
   }
 }
 </script>

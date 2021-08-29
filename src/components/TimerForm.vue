@@ -12,6 +12,7 @@ import Button, { BUTTON_TYPES } from './Button.vue'
 
 export default {
   name: 'TimerForm',
+  emits: ['submit'],
   components: {
     Input,
     Button
@@ -29,7 +30,7 @@ export default {
       const isValid = this.validateForm()
 
       if (isValid) {
-        console.log(this.name, this.date)
+        this.$emit('submit', this.name, this.date)
       }
     },
     validateForm () {
