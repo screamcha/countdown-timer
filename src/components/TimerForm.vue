@@ -1,7 +1,7 @@
 <template>
   <form class='timer-form' @submit.prevent='handleSubmit'>
     <Input label='Name' name='timer-name' v-model='name' :error='errors.name' />
-    <Input type='date' label='Date' name='timer-date' v-model='date' :error='errors.date' />
+    <Input type='date' label='Date' name='timer-date' v-model='date' :error='errors.date' :min='minDate' />
     <Button :type='BUTTON_TYPES.SUCCESS'>Create</Button>
   </form>
 </template>
@@ -21,8 +21,7 @@ export default {
     return {
       name: '',
       date: '',
-      errors: {},
-      BUTTON_TYPES
+      errors: {}
     }
   },
   methods: {
@@ -47,16 +46,27 @@ export default {
       }
       return true
     }
+  },
+  computed: {
+    minDate () {
+      return new Date().toISOString().split('T')[0]
+    }
+  },
+  created () {
+    this.BUTTON_TYPES = BUTTON_TYPES
   }
 }
 </script>
 
 <style>
 .timer-form {
+  padding: 10px;
+  box-shadow: 0 0 3px 0 grey;
+  border-radius: 3px;
   align-items: center;
   display: grid;
   grid-template-columns: 2fr 2fr 1fr;
   gap: 15px;
-  padding: 0 10px;
+  width: 100%;
 }
 </style>

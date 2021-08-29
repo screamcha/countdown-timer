@@ -12,7 +12,8 @@
 
 <script>
 export const BUTTON_TYPES = {
-  SUCCESS: 'success'
+  SUCCESS: 'success',
+  INFO: 'info'
 }
 
 export default {
@@ -39,11 +40,17 @@ export default {
   cursor: pointer;
   background-color: white;
   border-width: 1px;
+  border-color: grey;
+  color: inherit;
   border-radius: 3px;
 }
 
 .button__success {
   color: white;
   background-color: #28a745;
+}
+
+.button__info {
+  background-color: lightskyblue;
 }
 </style>

@@ -1,5 +1,8 @@
+import { nanoid } from 'nanoid'
+
 export default class Timer {
   constructor (name, date) {
+    this.id = nanoid()
     this.name = name
     this.date = new Date(date)
   }
@@ -12,8 +15,8 @@ export default class Timer {
       seconds: 1000
     }
 
-    const years = date.getFullYear() - this.date.getFullYear()
-    const months = date.getMonth() - this.date.getMonth()
+    const years = this.date.getFullYear() - date.getFullYear()
+    const months = this.date.getMonth() - date.getMonth()
 
     const dateSameYear = new Date(date.setFullYear(date.getFullYear() - years))
     const dateSameMonth = new Date(dateSameYear.setMonth(date.getMonth() - months))

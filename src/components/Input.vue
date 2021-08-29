@@ -1,7 +1,16 @@
 <template>
   <div class="input">
     <label class='input__label' v-if='label' :for='name'>{{ label }}</label>
-    <input class='input__field' :class="{'input__field--error': error}" :type='type' :name='name' :value='modelValue' @input="handleInput" />
+    <input
+      class='input__field'
+      :class="{'input__field--error': error}"
+      :type='type'
+      :name='name'
+      :value='modelValue'
+      :min='min'
+      :max='max'
+      @input="handleInput"
+    />
     <span v-if='error' class='input__error'>{{ error }}</span>
   </div>
 </template>
@@ -17,7 +26,9 @@ export default {
       type: String,
       default: 'text'
     },
-    error: String
+    error: String,
+    min: String,
+    max: String
   },
   methods: {
     handleInput (event) {

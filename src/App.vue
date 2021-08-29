@@ -1,12 +1,13 @@
 <template>
-  <TimerForm v-if='!timer' @submit='createTimer' />
-  <Timer v-else :timer='timer' />
-
+  <Timer v-for='timer in timers' :key='timer.id' :timer='timer' />
+  <TimerForm v-if='showTimerForm' @submit='createTimer' />
+  <Button :type='BUTTON_TYPES.INFO' v-if='timers.length && !showTimerForm' @click='handleAddMoreClick'>Add More</Button>
 </template>
 
 <script>
 import TimerForm from './components/TimerForm.vue'
 import Timer from './components/Timer.vue'
+import Button, { BUTTON_TYPES } from './components/Button.vue'
 import TimerModel from './models/Timer'
 import './assets/styles/normalize.css'
 import './assets/styles/global.css'
@@ -15,17 +16,26 @@ export default {
   name: 'App',
   data () {
     return {
-      timer: null
+      timers: [],
+      showTimerForm: true
     }
   },
   components: {
     TimerForm,
-    Timer
+    Timer,
+    Button
   },
   methods: {
     createTimer (name, date) {
-      this.timer = new TimerModel(name, date)
+      this.timers.push(new TimerModel(name, date))
+      this.showTimerForm = false
+    },
+    handleAddMoreClick () {
+      this.showTimerForm = true
     }
+  },
+  created () {
+    this.BUTTON_TYPES = BUTTON_TYPES
   }
 }
 </script>
@@ -41,7 +51,15 @@ export default {
   margin: 0 auto;
   height: 100vh;
   display: flex;
+  gap: 15px;
   flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
+}
+
+@media (max-width: 1400px) {
+  #app {
+    margin: 0 10px;
+  }
 }
 </style>
