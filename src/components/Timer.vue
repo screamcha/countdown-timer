@@ -15,11 +15,11 @@ import { getQuantityWithLabel } from '../utils/presentation'
 export default {
   name: 'Timer',
   props: {
-    timer: Timer
+    timer: Timer,
+    now: Date
   },
   data () {
     return {
-      now: new Date(),
       interval: null,
       finished: false
     }
@@ -43,13 +43,6 @@ export default {
       const { years, months, days, hours, minutes, seconds } = differences
       return `${getQuantityWithLabel('year', years)} ${getQuantityWithLabel('month', months)} ${getQuantityWithLabel('day', days)} ${getQuantityWithLabel('hour', hours)} ${getQuantityWithLabel('minute', minutes)} ${getQuantityWithLabel('second', seconds)}`
     }
-  },
-  mounted () {
-    this.interval = setInterval(() => {
-      window.requestAnimationFrame(() => {
-        this.now = new Date()
-      })
-    }, 1000)
   }
 }
 </script>

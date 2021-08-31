@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid'
+import { differenceInDays, differenceInHours, differenceInMinutes, differenceInMonths, differenceInSeconds, differenceInYears, subDays, subHours, subMinutes, subMonths, subSeconds, subYears } from 'date-fns'
 
 export default class Timer {
   constructor (name, date) {
@@ -8,34 +9,26 @@ export default class Timer {
   }
 
   calculateDifference (date) {
-    const dividers = {
-      days: 24 * 60 * 60 * 1000,
-      hours: 60 * 60 * 1000,
-      minutes: 60 * 1000,
-      seconds: 1000
+    const functions = {
+      years: [differenceInYears, subYears],
+      months: [differenceInMonths, subMonths],
+      days: [differenceInDays, subDays],
+      hours: [differenceInHours, subHours],
+      minutes: [differenceInMinutes, subMinutes],
+      seconds: [differenceInSeconds, subSeconds]
     }
 
-    const years = this.date.getFullYear() - date.getFullYear()
-    const months = this.date.getMonth() - date.getMonth()
+    let substractableDate = new Date(this.date)
 
-    const dateSameYear = new Date(date.setFullYear(date.getFullYear() - years))
-    const dateSameMonth = new Date(dateSameYear.setMonth(date.getMonth() - months))
-
-    let differenceInMs = this.date.getTime() - dateSameMonth.getTime()
-
-    const restDifferences = Object.entries(dividers).reduce(
-      (result, [divider, value]) => {
-        const differenceForDivider = Math.floor(differenceInMs / value)
-        result[divider] = differenceForDivider
-        differenceInMs -= differenceForDivider * value
-        return result
+    return Object.entries(functions).reduce(
+      (result, [key, [differenceFunc, substractFunc]]) => {
+        const difference = differenceFunc(substractableDate, date)
+        substractableDate = substractFunc(substractableDate, difference)
+        return {
+          ...result,
+          [key]: difference
+        }
       }, {}
     )
-
-    return {
-      years,
-      months,
-      ...restDifferences
-    }
   }
 }

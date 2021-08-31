@@ -1,5 +1,5 @@
 <template>
-  <Timer v-for='timer in timers' :key='timer.id' :timer='timer' />
+  <Timer v-for='timer in timers' :key='timer.id' :timer='timer' :now='now' />
   <TimerForm v-if='showTimerForm' @submit='createTimer' />
   <Button :type='BUTTON_TYPES.INFO' v-if='timers.length && !showTimerForm' @click='handleAddMoreClick'>Add More</Button>
 </template>
@@ -17,7 +17,9 @@ export default {
   data () {
     return {
       timers: [],
-      showTimerForm: true
+      showTimerForm: true,
+      now: new Date(),
+      interval: null
     }
   },
   components: {
@@ -36,6 +38,11 @@ export default {
   },
   created () {
     this.BUTTON_TYPES = BUTTON_TYPES
+  },
+  mounted () {
+    this.interval = setInterval(() => {
+      this.now = new Date()
+    }, 1000)
   }
 }
 </script>
