@@ -2,8 +2,8 @@ import { nanoid } from 'nanoid'
 import { differenceInDays, differenceInHours, differenceInMinutes, differenceInMonths, differenceInSeconds, differenceInYears, subDays, subHours, subMinutes, subMonths, subSeconds, subYears } from 'date-fns'
 
 export default class Timer {
-  constructor (name, date) {
-    this.id = nanoid()
+  constructor (name, date, id = nanoid()) {
+    this.id = id
     this.name = name
     this.date = new Date(date)
   }
@@ -30,5 +30,13 @@ export default class Timer {
         }
       }, {}
     )
+  }
+
+  toString () {
+    return JSON.stringify({
+      id: this.id,
+      name: this.name,
+      date: this.date.toISOString()
+    })
   }
 }

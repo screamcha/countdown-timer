@@ -5,10 +5,12 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import TimerForm from './components/TimerForm.vue'
 import Timer from './components/Timer.vue'
 import Button, { BUTTON_TYPES } from './components/Button.vue'
 import TimerModel from './models/Timer'
+import { provideStorageService } from './composables/storageService'
 import './assets/styles/normalize.css'
 import './assets/styles/global.css'
 
@@ -16,8 +18,7 @@ export default {
   name: 'App',
   data () {
     return {
-      timers: [],
-      showTimerForm: true,
+      showTimerForm: !this.timers.length,
       now: new Date(),
       interval: null
     }
@@ -27,9 +28,20 @@ export default {
     Timer,
     Button
   },
+  setup () {
+    const storageService = provideStorageService()
+    const timersRaw = storageService.getItem(storageService.keys.TIMERS) || []
+    const timers = ref(timersRaw.map(raw => new TimerModel(raw.name, raw.date, raw.id)))
+
+    return {
+      timers,
+      storageService
+    }
+  },
   methods: {
     createTimer (name, date) {
       this.timers.push(new TimerModel(name, date))
+      this.storageService.setItem(this.storageService.keys.TIMERS, this.timers)
       this.showTimerForm = false
     },
     handleAddMoreClick () {
