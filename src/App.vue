@@ -1,5 +1,5 @@
 <template>
-  <Timer v-for='timer in timers' :key='timer.id' :timer='timer' :now='now' />
+  <Timer v-for='timer in timers' :key='timer.id' :timer='timer' :now='now' @finishTimer='handleFinishTimer' />
   <TimerForm v-if='showTimerForm' @submit='createTimer' />
   <Button :type='BUTTON_TYPES.INFO' v-if='timers.length && !showTimerForm' @click='handleAddMoreClick'>Add More</Button>
 </template>
@@ -46,6 +46,10 @@ export default {
     },
     handleAddMoreClick () {
       this.showTimerForm = true
+    },
+    handleFinishTimer (finishedTimer) {
+      const updatedTimers = this.timers.filter(timer => timer.id !== finishedTimer)
+      this.storageService.setItem(this.storageService.keys.TIMERS, updatedTimers)
     }
   },
   created () {

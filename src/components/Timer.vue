@@ -28,6 +28,7 @@ export default {
     finishTimer () {
       clearInterval(this.interval)
       this.finished = true
+      this.$emit('finishTimer', this.timer)
     }
   },
   computed: {
