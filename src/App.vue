@@ -31,7 +31,17 @@ export default {
   setup () {
     const storageService = provideStorageService()
     const timersRaw = storageService.getItem(storageService.keys.TIMERS) || []
-    const timers = ref(timersRaw.map(raw => new TimerModel(raw.name, raw.date, raw.id)))
+    const now = new Date()
+
+    const timers = ref(
+      timersRaw
+        .map(raw => new TimerModel(raw.name, raw.date, raw.id))
+        .filter(timer => {
+          const differenceValues = Object.values(timer.calculateDifference(now))
+          const passed = differenceValues.some(value => value < 0) || differenceValues.every(value => value === 0)
+          return !passed
+        })
+    )
 
     return {
       timers,
