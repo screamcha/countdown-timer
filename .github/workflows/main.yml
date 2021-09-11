@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 jobs:
   deploy-firebase:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout to a branch
         uses: actions/checkout@v2
