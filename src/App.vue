@@ -80,7 +80,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   font-size: 16pt;
   color: #2c3e50;
-  max-width: 1400px;
+  max-width: 1000px;
   margin: 0 auto;
   height: 100vh;
   display: flex;
@@ -90,9 +90,15 @@ export default {
   justify-content: center;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1000px) {
   #app {
     margin: 0 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  #app {
+    margin: 0 20px;
   }
 }
 </style>

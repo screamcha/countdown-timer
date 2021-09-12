@@ -1,3 +1,7 @@
+:root {
+  --border-color: grey;
+}
+
 * {
   box-sizing: border-box;
 }

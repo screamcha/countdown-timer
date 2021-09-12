@@ -40,7 +40,7 @@ export default {
   cursor: pointer;
   background-color: white;
   border-width: 1px;
-  border-color: grey;
+  border-color: var(--border-color);
   color: inherit;
   border-radius: 3px;
 }

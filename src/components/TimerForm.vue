@@ -2,11 +2,12 @@
   <form class='timer-form' @submit.prevent='handleSubmit'>
     <Input label='Name' name='timer-name' v-model='name' :error='errors.name' />
     <Input type='date' label='Date' name='timer-date' v-model='date' :error='errors.date' :min='minDate' />
-    <Button :type='BUTTON_TYPES.SUCCESS'>Create</Button>
+    <Button class='timer-form__button' :type='BUTTON_TYPES.SUCCESS'>Create</Button>
   </form>
 </template>
 
 <script>
+import { addDays } from 'date-fns'
 import Input from './Input.vue'
 import Button, { BUTTON_TYPES } from './Button.vue'
 
@@ -49,7 +50,8 @@ export default {
   },
   computed: {
     minDate () {
-      return new Date().toISOString().split('T')[0]
+      const minDate = addDays(new Date(), 1)
+      return minDate.toISOString().split('T')[0]
     }
   },
   created () {
@@ -68,5 +70,20 @@ export default {
   grid-template-columns: 2fr 2fr 1fr;
   gap: 15px;
   width: 100%;
+
+}
+
+@media (max-width: 600px) {
+  .timer-form {
+    padding: 15px;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .timer-form__button {
+    justify-self: end;
+  }
 }
 </style>

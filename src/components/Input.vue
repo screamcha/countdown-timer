@@ -54,6 +54,8 @@ export default {
   width: 100%;
   height: 35px;
   margin-bottom: 29px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
 }
 
 .input__field--error {
